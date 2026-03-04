@@ -1,11 +1,21 @@
-import './App.css'
+import { Routes, Route } from 'react-router-dom'
+import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
+import PrivateRoute from './components/PrivateRoute'
 
 function App() {
   return (
-    <div className="app">
-      <h1>Portal de Gestão de Pagamentos</h1>
-      <p>Sistema funcionando com sucesso!</p>
-    </div>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route
+        path="/dashboard"
+        element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        }
+      />
+    </Routes>
   )
 }
 
