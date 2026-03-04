@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react'
-import { getPagamento, savePagamento } from '../services/pagamento.service'
+import {
+  getPagamento,
+  savePagamento,
+  saveComprovante,
+  getComprovante,
+  deleteComprovante,
+} from '../services/pagamento.service'
 import { MESES, ANOS } from '../constants/app'
 
 export function usePagamento() {
@@ -11,11 +17,13 @@ export function usePagamento() {
   const [error, setError] = useState('')
   const [edited, setEdited] = useState(false)
   const [saveMsg, setSaveMsg] = useState('')
+  const [pendingFiles, setPendingFiles] = useState({ agua: null, luz: null })
 
   useEffect(() => {
     setLoading(true)
     setEdited(false)
     setSaveMsg('')
+    setPendingFiles({ agua: null, luz: null })
     getPagamento(anoSelecionado, mesSelecionado)
       .then((data) => {
         setDadosMes(data)
@@ -51,15 +59,81 @@ export function usePagamento() {
     setSaveMsg('')
   }
 
+  // Le o arquivo como base64 e guarda em pendingFiles ate confirmar
   function handleComprovante(tipo, e) {
     const file = e.target.files[0]
     if (!file) return
-    setDadosMes((prev) => ({
-      ...prev,
-      [tipo]: file.name,
-    }))
-    setEdited(true)
+    const reader = new FileReader()
+    reader.onload = () => {
+      setPendingFiles((prev) => ({
+        ...prev,
+        [tipo]: { base64: reader.result, nomeArquivo: file.name },
+      }))
+    }
+    reader.readAsDataURL(file)
+  }
+
+  // Confirma upload: salva base64 no Firestore
+  async function handleConfirmUpload(tipo) {
+    const pending = pendingFiles[tipo]
+    if (!pending) return
+    setSaving(true)
     setSaveMsg('')
+    try {
+      await saveComprovante(
+        anoSelecionado,
+        mesSelecionado,
+        tipo,
+        pending.base64,
+        pending.nomeArquivo
+      )
+      const campo = tipo === 'agua' ? 'comprovanteAgua' : 'comprovanteLuz'
+      setDadosMes((prev) => ({ ...prev, [campo]: pending.nomeArquivo }))
+      setPendingFiles((prev) => ({ ...prev, [tipo]: null }))
+      setSaveMsg('Comprovante enviado com sucesso!')
+    } catch (err) {
+      setSaveMsg(`Erro ao enviar comprovante: ${err.message}`)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  // Baixa o PDF: busca base64 do Firestore e dispara download
+  async function handleDownloadComprovante(tipo) {
+    setSaving(true)
+    try {
+      const data = await getComprovante(anoSelecionado, mesSelecionado, tipo)
+      if (!data) {
+        setSaveMsg('Comprovante não encontrado.')
+        setSaving(false)
+        return
+      }
+      const link = document.createElement('a')
+      link.href = data.base64
+      link.download = data.nomeArquivo
+      link.click()
+    } catch (err) {
+      setSaveMsg(`Erro ao baixar comprovante: ${err.message}`)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  // Deleta comprovante do Firestore
+  async function handleDeleteComprovante(tipo) {
+    setSaving(true)
+    setSaveMsg('')
+    try {
+      await deleteComprovante(anoSelecionado, mesSelecionado, tipo)
+      const campo = tipo === 'agua' ? 'comprovanteAgua' : 'comprovanteLuz'
+      setDadosMes((prev) => ({ ...prev, [campo]: '' }))
+      setPendingFiles((prev) => ({ ...prev, [tipo]: null }))
+      setSaveMsg('Comprovante deletado.')
+    } catch (err) {
+      setSaveMsg(`Erro ao deletar comprovante: ${err.message}`)
+    } finally {
+      setSaving(false)
+    }
   }
 
   async function handleSave() {
@@ -87,9 +161,13 @@ export function usePagamento() {
     error,
     edited,
     saveMsg,
+    pendingFiles,
     handlePessoas,
     togglePayment,
     handleComprovante,
+    handleConfirmUpload,
+    handleDownloadComprovante,
+    handleDeleteComprovante,
     handleSave,
   }
 }

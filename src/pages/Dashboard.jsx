@@ -13,7 +13,6 @@ export default function Dashboard() {
   const pagamento = usePagamento()
 
   const isAdmin = user.role === 'admin'
-  const baseUrl = import.meta.env.BASE_URL
 
   function handleLogout() {
     logout()
@@ -80,8 +79,12 @@ export default function Dashboard() {
           comprovanteAgua={comprovanteAgua}
           comprovanteLuz={comprovanteLuz}
           isAdmin={isAdmin}
-          baseUrl={baseUrl}
+          saving={pagamento.saving}
+          pendingFiles={pagamento.pendingFiles}
           onUpload={pagamento.handleComprovante}
+          onConfirmUpload={pagamento.handleConfirmUpload}
+          onDownload={pagamento.handleDownloadComprovante}
+          onDelete={pagamento.handleDeleteComprovante}
         />
       </main>
     </div>

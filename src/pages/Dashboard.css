@@ -382,6 +382,69 @@ tbody tr:hover {
   font-style: italic;
 }
 
+.comprovante-nome {
+  font-size: 0.85rem;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  word-break: break-all;
+}
+
+.comprovante-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.btn-confirm {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-confirm:hover {
+  background-color: #218838;
+}
+
+.btn-confirm:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.btn-delete {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}
+
+.btn-delete:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.pending-file {
+  margin-bottom: 0.75rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .dashboard-header {
