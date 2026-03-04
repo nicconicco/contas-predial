@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { readXlsx, generateXlsx, MESES, ANOS } from '../utils/readXlsx'
+import { getPagamento, savePagamento, MESES, ANOS } from '../utils/firebaseData'
 import './Dashboard.css'
 
 const MESES_CURTOS = [
@@ -14,11 +14,12 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const [anoSelecionado, setAnoSelecionado] = useState(ANOS[ANOS.length - 1])
   const [mesSelecionado, setMesSelecionado] = useState(MESES[0])
-  const [mesesData, setMesesData] = useState({})
-  const [comprovantes, setComprovantes] = useState({})
+  const [dadosMes, setDadosMes] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [edited, setEdited] = useState(false)
+  const [saveMsg, setSaveMsg] = useState('')
 
   const isAdmin = user.role === 'admin'
   const baseUrl = import.meta.env.BASE_URL
@@ -26,56 +27,78 @@ export default function Dashboard() {
   useEffect(() => {
     setLoading(true)
     setEdited(false)
-    readXlsx(anoSelecionado)
-      .then(({ mesesData, comprovantes }) => {
-        setMesesData(mesesData)
-        setComprovantes(comprovantes)
+    setSaveMsg('')
+    getPagamento(anoSelecionado, mesSelecionado)
+      .then((data) => {
+        setDadosMes(data)
         setLoading(false)
       })
       .catch(() => {
-        setError('Erro ao carregar planilha')
+        setError('Erro ao carregar dados')
         setLoading(false)
       })
-  }, [anoSelecionado])
+  }, [anoSelecionado, mesSelecionado])
 
   function handleLogout() {
     logout()
     navigate('/')
   }
 
-  function togglePayment(index, field) {
-    setMesesData((prev) => ({
+  function handlePessoas(index, value) {
+    const num = parseInt(value, 10)
+    if (isNaN(num) || num < 0) return
+    setDadosMes((prev) => ({
       ...prev,
-      [mesSelecionado]: prev[mesSelecionado].map((row, i) =>
+      apartamentos: prev.apartamentos.map((row, i) =>
+        i === index ? { ...row, quantidadePessoas: num } : row
+      ),
+    }))
+    setEdited(true)
+    setSaveMsg('')
+  }
+
+  function togglePayment(index, field) {
+    setDadosMes((prev) => ({
+      ...prev,
+      apartamentos: prev.apartamentos.map((row, i) =>
         i === index ? { ...row, [field]: row[field] === 'Sim' ? 'Não' : 'Sim' } : row
       ),
     }))
     setEdited(true)
+    setSaveMsg('')
   }
 
   function handleComprovante(tipo, e) {
     const file = e.target.files[0]
     if (!file) return
-    setComprovantes((prev) => ({
+    setDadosMes((prev) => ({
       ...prev,
-      [mesSelecionado]: {
-        ...prev[mesSelecionado],
-        [tipo]: file.name,
-      },
+      [tipo]: file.name,
     }))
     setEdited(true)
+    setSaveMsg('')
   }
 
-  function handleSave() {
-    generateXlsx(mesesData, comprovantes, anoSelecionado)
-    setEdited(false)
+  async function handleSave() {
+    setSaving(true)
+    setSaveMsg('')
+    try {
+      await savePagamento(anoSelecionado, mesSelecionado, dadosMes)
+      setEdited(false)
+      setSaveMsg('Salvo com sucesso! As alterações já estão disponíveis para todos.')
+    } catch (err) {
+      setSaveMsg(`Erro ao salvar: ${err.message}`)
+    } finally {
+      setSaving(false)
+    }
   }
 
   if (loading) return <div className="dashboard-loading">Carregando...</div>
   if (error) return <div className="dashboard-error">{error}</div>
 
-  const dadosMes = mesesData[mesSelecionado] || []
-  const compMes = comprovantes[mesSelecionado] || { agua: '', luz: '' }
+  const apartamentos = dadosMes?.apartamentos || []
+  const comprovanteAgua = dadosMes?.comprovanteAgua || ''
+  const comprovanteLuz = dadosMes?.comprovanteLuz || ''
 
   return (
     <div className="dashboard">
@@ -93,7 +116,15 @@ export default function Dashboard() {
         {isAdmin && edited && (
           <div className="save-bar">
             <span>Alterações não salvas</span>
-            <button onClick={handleSave} className="btn-save">Salvar alterações (baixar .xlsx)</button>
+            <button onClick={handleSave} className="btn-save" disabled={saving}>
+              {saving ? 'Salvando...' : 'Salvar alterações'}
+            </button>
+          </div>
+        )}
+
+        {saveMsg && (
+          <div className={`save-msg ${saveMsg.startsWith('Erro') ? 'save-msg-error' : 'save-msg-success'}`}>
+            {saveMsg}
           </div>
         )}
 
@@ -131,42 +162,64 @@ export default function Dashboard() {
             <thead>
               <tr>
                 <th>Nome</th>
+                <th>Qtd. Pessoas</th>
                 <th>Pagamento Água</th>
                 <th>Pagamento Luz</th>
+                {isAdmin && <th>Ações</th>}
               </tr>
             </thead>
             <tbody>
-              {dadosMes.map((row, index) => (
+              {apartamentos.map((row, index) => (
                 <tr key={index}>
-                  <td className="cell-nome">{row['Nome']}</td>
+                  <td className="cell-nome">{row.nome}</td>
+                  <td className="cell-pessoas">
+                    {isAdmin ? (
+                      <input
+                        type="number"
+                        min="0"
+                        className="input-pessoas"
+                        value={row.quantidadePessoas}
+                        onChange={(e) => handlePessoas(index, e.target.value)}
+                      />
+                    ) : (
+                      row.quantidadePessoas
+                    )}
+                  </td>
                   <td>
                     {isAdmin ? (
                       <button
-                        className={`btn-toggle ${row['Pagamento Água'] === 'Sim' ? 'toggle-sim' : 'toggle-nao'}`}
-                        onClick={() => togglePayment(index, 'Pagamento Água')}
+                        className={`btn-toggle ${row.pagamentoAgua === 'Sim' ? 'toggle-sim' : 'toggle-nao'}`}
+                        onClick={() => togglePayment(index, 'pagamentoAgua')}
                       >
-                        {row['Pagamento Água']}
+                        {row.pagamentoAgua}
                       </button>
                     ) : (
-                      <span className={`status ${row['Pagamento Água'] === 'Sim' ? 'status-sim' : 'status-nao'}`}>
-                        {row['Pagamento Água']}
+                      <span className={`status ${row.pagamentoAgua === 'Sim' ? 'status-sim' : 'status-nao'}`}>
+                        {row.pagamentoAgua}
                       </span>
                     )}
                   </td>
                   <td>
                     {isAdmin ? (
                       <button
-                        className={`btn-toggle ${row['Pagamento Luz'] === 'Sim' ? 'toggle-sim' : 'toggle-nao'}`}
-                        onClick={() => togglePayment(index, 'Pagamento Luz')}
+                        className={`btn-toggle ${row.pagamentoLuz === 'Sim' ? 'toggle-sim' : 'toggle-nao'}`}
+                        onClick={() => togglePayment(index, 'pagamentoLuz')}
                       >
-                        {row['Pagamento Luz']}
+                        {row.pagamentoLuz}
                       </button>
                     ) : (
-                      <span className={`status ${row['Pagamento Luz'] === 'Sim' ? 'status-sim' : 'status-nao'}`}>
-                        {row['Pagamento Luz']}
+                      <span className={`status ${row.pagamentoLuz === 'Sim' ? 'status-sim' : 'status-nao'}`}>
+                        {row.pagamentoLuz}
                       </span>
                     )}
                   </td>
+                  {isAdmin && (
+                    <td>
+                      <button className="btn-atualizar" onClick={handleSave} disabled={saving}>
+                        {saving ? '...' : 'Atualizar'}
+                      </button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
@@ -177,9 +230,9 @@ export default function Dashboard() {
         <div className="comprovantes-section">
           <div className="comprovante-card">
             <h3>Comprovante Geral de Água</h3>
-            {compMes.agua ? (
+            {comprovanteAgua ? (
               <a
-                href={`${baseUrl}comprovantes/agua/${compMes.agua}`}
+                href={`${baseUrl}comprovantes/agua/${comprovanteAgua}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-download"
@@ -195,7 +248,7 @@ export default function Dashboard() {
                 <input
                   type="file"
                   accept=".pdf"
-                  onChange={(e) => handleComprovante('agua', e)}
+                  onChange={(e) => handleComprovante('comprovanteAgua', e)}
                   hidden
                 />
               </label>
@@ -204,9 +257,9 @@ export default function Dashboard() {
 
           <div className="comprovante-card">
             <h3>Comprovante Geral de Luz</h3>
-            {compMes.luz ? (
+            {comprovanteLuz ? (
               <a
-                href={`${baseUrl}comprovantes/luz/${compMes.luz}`}
+                href={`${baseUrl}comprovantes/luz/${comprovanteLuz}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-download"
@@ -222,7 +275,7 @@ export default function Dashboard() {
                 <input
                   type="file"
                   accept=".pdf"
-                  onChange={(e) => handleComprovante('luz', e)}
+                  onChange={(e) => handleComprovante('comprovanteLuz', e)}
                   hidden
                 />
               </label>

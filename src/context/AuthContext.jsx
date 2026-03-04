@@ -1,21 +1,30 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { getSenhas } from '../utils/firebaseData'
 
 const AuthContext = createContext(null)
 
-const PASSWORDS = {
-  viewer: 'predial2025',
-  admin: 'admin2025',
-}
-
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
+  const [senhas, setSenhas] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getSenhas().then((data) => {
+      setSenhas(data)
+      setLoading(false)
+    }).catch(() => {
+      setLoading(false)
+    })
+  }, [])
 
   function login(password) {
-    if (password === PASSWORDS.admin) {
+    if (!senhas) return { success: false }
+
+    if (password === senhas.admin) {
       setUser({ role: 'admin' })
       return { success: true }
     }
-    if (password === PASSWORDS.viewer) {
+    if (password === senhas.normal) {
       setUser({ role: 'viewer' })
       return { success: true }
     }
@@ -27,7 +36,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   )

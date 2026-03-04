@@ -6,7 +6,7 @@ import './Login.css'
 export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const { login } = useAuth()
+  const { login, loading } = useAuth()
   const navigate = useNavigate()
 
   function handleSubmit(e) {
@@ -35,7 +35,9 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             autoFocus
           />
-          <button type="submit">Entrar</button>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Carregando...' : 'Entrar'}
+          </button>
         </form>
         {error && <p className="login-error">{error}</p>}
       </div>

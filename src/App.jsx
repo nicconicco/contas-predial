@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Seed from './pages/Seed'
 import PrivateRoute from './components/PrivateRoute'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           </PrivateRoute>
         }
       />
+      <Route path="/seed" element={<Seed />} />
     </Routes>
   )
 }

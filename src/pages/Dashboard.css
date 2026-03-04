@@ -96,6 +96,32 @@
   background-color: #218838;
 }
 
+.btn-save:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Save message */
+.save-msg {
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.save-msg-success {
+  background-color: #d4edda;
+  border: 1px solid #28a745;
+  color: #155724;
+}
+
+.save-msg-error {
+  background-color: #f8d7da;
+  border: 1px solid #e74c3c;
+  color: #721c24;
+}
+
 /* Tabs Ano */
 .tabs-ano {
   display: flex;
@@ -231,6 +257,40 @@ tbody tr:hover {
 .status-nao {
   background-color: #f8d7da;
   color: #721c24;
+}
+
+/* Input pessoas (admin) */
+.input-pessoas {
+  width: 60px;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-pessoas:focus {
+  border-color: #4a90d9;
+}
+
+/* Botão Atualizar (admin) */
+.btn-atualizar {
+  padding: 0.35rem 0.8rem;
+  background-color: #4a90d9;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.btn-atualizar:hover {
+  background-color: #357abd;
 }
 
 /* Toggle buttons (admin) */
