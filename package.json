@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://cgalves.github.io/contas-predial/",
+  "homepage": "https://nicconicco.github.io/contas-predial/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
