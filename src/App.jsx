@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
-import Seed from './pages/Seed'
 import PrivateRoute from './components/PrivateRoute'
+import Seed from './dev/Seed'
 
 function App() {
   return (

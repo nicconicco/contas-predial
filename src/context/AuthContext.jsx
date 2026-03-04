@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { getSenhas } from '../utils/firebaseData'
+import { getSenhas } from '../services/auth.service'
 
 const AuthContext = createContext(null)
 
@@ -9,12 +9,14 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getSenhas().then((data) => {
-      setSenhas(data)
-      setLoading(false)
-    }).catch(() => {
-      setLoading(false)
-    })
+    getSenhas()
+      .then((data) => {
+        setSenhas(data)
+        setLoading(false)
+      })
+      .catch(() => {
+        setLoading(false)
+      })
   }, [])
 
   function login(password) {

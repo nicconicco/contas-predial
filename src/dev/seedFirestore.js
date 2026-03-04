@@ -1,30 +1,29 @@
 import { doc, setDoc } from 'firebase/firestore'
-import { db } from './firebase'
-
-const MESES = [
-  'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-  'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-]
+import { db } from '../config/firebase'
+import { MESES } from '../constants/app'
 
 const INQUILINOS = [
-  'Apartamento 101',
-  'Apartamento 102',
-  'Apartamento 103',
-  'Apartamento 201',
-  'Apartamento 202',
+  'Apartamento 00',
+  'Apartamento 11',
+  'Apartamento 12',
+  'Apartamento 21',
+  'Apartamento 22',
+  'Apartamento 31',
+  'Apartamento 33',
+  'Casa 00',
+  'Loja 00',
 ]
 
 export async function seedFirestore() {
-  // Senhas
   await setDoc(doc(db, 'config', 'senhas'), {
     normal: 'predial2025',
     admin: 'admin2025',
   })
   console.log('Senhas criadas')
 
-  // 2025 - Todos não pagaram
+  // pagamentos/{ano}/meses/{mes}
   for (const mes of MESES) {
-    await setDoc(doc(db, 'pagamentos', `2025_${mes}`), {
+    await setDoc(doc(db, 'pagamentos', '2025', 'meses', mes), {
       ano: '2025',
       mes,
       apartamentos: INQUILINOS.map((nome) => ({
@@ -39,10 +38,9 @@ export async function seedFirestore() {
   }
   console.log('Dados 2025 criados')
 
-  // 2026 - Janeiro pago, resto não
   for (const mes of MESES) {
     const pago = mes === 'Janeiro' ? 'Sim' : 'Não'
-    await setDoc(doc(db, 'pagamentos', `2026_${mes}`), {
+    await setDoc(doc(db, 'pagamentos', '2026', 'meses', mes), {
       ano: '2026',
       mes,
       apartamentos: INQUILINOS.map((nome) => ({
