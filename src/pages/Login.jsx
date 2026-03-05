@@ -15,7 +15,7 @@ export default function Login() {
 
     const result = login(password)
     if (result.success) {
-      navigate('/dashboard')
+      navigate('/home')
     } else {
       setError('Não foi possível acessar, verifique com o administrador')
       setPassword('')
