@@ -54,5 +54,33 @@ export async function seedFirestore() {
     })
   }
   console.log('Dados 2026 criados')
+
+  // fundos/{ano}/meses/{mes}
+  for (const mes of MESES) {
+    await setDoc(doc(db, 'fundos', '2025', 'meses', mes), {
+      ano: '2025',
+      mes,
+      apartamentos: INQUILINOS.map((nome) => ({
+        nome,
+        fundoInterno: 'Não',
+        fundoExterno: 'Não',
+      })),
+    })
+  }
+  console.log('Fundos 2025 criados')
+
+  for (const mes of MESES) {
+    const pago = mes === 'Janeiro' ? 'Sim' : 'Não'
+    await setDoc(doc(db, 'fundos', '2026', 'meses', mes), {
+      ano: '2026',
+      mes,
+      apartamentos: INQUILINOS.map((nome) => ({
+        nome,
+        fundoInterno: pago,
+        fundoExterno: pago,
+      })),
+    })
+  }
+  console.log('Fundos 2026 criados')
   console.log('Seed completo!')
 }

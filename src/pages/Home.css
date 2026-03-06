@@ -26,9 +26,9 @@
 
 .home-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  max-width: 700px;
+  max-width: 900px;
   width: 100%;
 }
 

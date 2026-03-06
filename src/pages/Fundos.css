@@ -1,0 +1,148 @@
+.fundos {
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.fundos-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #1a1a2e;
+  color: #fff;
+}
+
+.fundos-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fundos-header h1 {
+  font-size: 1.2rem;
+}
+
+.fundos-content {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Botao totais */
+.fundos-totais-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn-totais {
+  padding: 0.6rem 1.5rem;
+  background-color: #1a1a2e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-totais:hover {
+  background-color: #2d2d4e;
+}
+
+.btn-totais:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Totais overlay/modal */
+.totais-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.totais-panel {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  max-width: 800px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.totais-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.totais-header h2 {
+  font-size: 1.2rem;
+  color: #1a1a2e;
+}
+
+.btn-fechar-totais {
+  padding: 0.4rem 1rem;
+  background: none;
+  border: 1px solid #1a1a2e;
+  color: #1a1a2e;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-fechar-totais:hover {
+  background-color: #1a1a2e;
+  color: #fff;
+}
+
+.cell-total {
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.totais-row-final {
+  background-color: #f0f2f5;
+  font-weight: 700;
+}
+
+.totais-row-final td {
+  border-top: 2px solid #1a1a2e;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .fundos-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .fundos-header-left {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .fundos-content {
+    padding: 1rem;
+  }
+
+  .totais-panel {
+    padding: 1rem;
+    width: 95%;
+  }
+}

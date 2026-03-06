@@ -29,6 +29,11 @@ export default function Home() {
             <h2>Consertos Realizados</h2>
             <p>Registro de consertos e observações por apartamento</p>
           </button>
+
+          <button className="home-card" onClick={() => navigate('/fundos')}>
+            <h2>Fundo de Manutenção</h2>
+            <p>Controle de fundo interno e externo por apartamento</p>
+          </button>
         </div>
       </main>
     </div>

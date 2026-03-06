@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import Consertos from './pages/Consertos'
+import Fundos from './pages/Fundos'
 import PrivateRoute from './components/PrivateRoute'
 import Seed from './dev/Seed'
 
@@ -31,6 +32,14 @@ function App() {
         element={
           <PrivateRoute>
             <Consertos />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/fundos"
+        element={
+          <PrivateRoute>
+            <Fundos />
           </PrivateRoute>
         }
       />
