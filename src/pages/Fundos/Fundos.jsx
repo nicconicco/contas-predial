@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { useFundos } from '../hooks/useFundos'
-import YearTabs from '../components/YearTabs'
-import MonthTabs from '../components/MonthTabs'
-import FundoTable from '../components/FundoTable'
-import TotaisPanel from '../components/TotaisPanel'
+import { useAuth } from '../../context/AuthContext'
+import { useFundos } from '../../hooks/useFundos'
+import YearTabs from '../../components/YearTabs'
+import MonthTabs from '../../components/MonthTabs'
+import FundoTable from '../../components/FundoTable'
+import TotaisPanel from '../../components/TotaisPanel'
 import './Fundos.css'
 
 export default function Fundos() {

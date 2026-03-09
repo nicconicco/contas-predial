@@ -1,9 +1,10 @@
 import { Routes, Route } from 'react-router-dom'
-import Login from './pages/Login'
-import Home from './pages/Home'
-import Dashboard from './pages/Dashboard'
-import Consertos from './pages/Consertos'
-import Fundos from './pages/Fundos'
+import Login from './pages/Login/Login'
+import Home from './pages/Home/Home'
+import Dashboard from './pages/Dashboard/Dashboard'
+import Consertos from './pages/Consertos/Consertos'
+import Fundos from './pages/Fundos/Fundos'
+import Relatorios from './pages/Relatorios/Relatorios'
 import PrivateRoute from './components/PrivateRoute'
 import Seed from './dev/Seed'
 
@@ -40,6 +41,14 @@ function App() {
         element={
           <PrivateRoute>
             <Fundos />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/relatorios"
+        element={
+          <PrivateRoute>
+            <Relatorios />
           </PrivateRoute>
         }
       />

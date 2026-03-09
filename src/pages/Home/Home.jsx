@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 import './Home.css'
 
 export default function Home() {
@@ -33,6 +33,11 @@ export default function Home() {
           <button className="home-card" onClick={() => navigate('/fundos')}>
             <h2>Fundo de Manutenção</h2>
             <p>Controle de fundo interno e externo por apartamento</p>
+          </button>
+
+          <button className="home-card" onClick={() => navigate('/relatorios')}>
+            <h2>Relatórios Antigos</h2>
+            <p>Visualizar e baixar relatórios antigos</p>
           </button>
         </div>
       </main>

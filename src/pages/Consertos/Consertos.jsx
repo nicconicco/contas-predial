@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { useConsertos } from '../hooks/useConsertos'
-import { APARTAMENTOS } from '../constants/app'
+import { useAuth } from '../../context/AuthContext'
+import { useConsertos } from '../../hooks/useConsertos'
+import { APARTAMENTOS } from '../../constants/app'
 import './Consertos.css'
 
 function NovaObservacaoForm({ saving, onSubmit }) {

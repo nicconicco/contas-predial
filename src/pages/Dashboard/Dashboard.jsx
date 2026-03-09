@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { usePagamento } from '../hooks/usePagamento'
-import YearTabs from '../components/YearTabs'
-import MonthTabs from '../components/MonthTabs'
-import PaymentTable from '../components/PaymentTable'
-import ComprovantesSection from '../components/ComprovantesSection'
+import { useAuth } from '../../context/AuthContext'
+import { usePagamento } from '../../hooks/usePagamento'
+import YearTabs from '../../components/YearTabs'
+import MonthTabs from '../../components/MonthTabs'
+import PaymentTable from '../../components/PaymentTable'
+import ComprovantesSection from '../../components/ComprovantesSection'
 import './Dashboard.css'
 
 export default function Dashboard() {

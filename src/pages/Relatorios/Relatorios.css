@@ -1,0 +1,141 @@
+.relatorios {
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.relatorios-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #1a1a2e;
+  color: #fff;
+}
+
+.relatorios-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.relatorios-header h1 {
+  font-size: 1.2rem;
+}
+
+.relatorios-content {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.relatorios-loading {
+  text-align: center;
+  color: #666;
+  padding: 2rem;
+}
+
+/* Upload section */
+.relatorios-upload {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.relatorios-upload h3 {
+  font-size: 1rem;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+}
+
+.relatorios-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.relatorios-pending-name {
+  font-size: 0.85rem;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Lista de relatorios */
+.relatorios-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.relatorio-item {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.relatorio-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.relatorio-nome {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.relatorio-data {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.relatorio-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sem-relatorios {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 3rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .relatorios-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .relatorios-header-left {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .relatorios-content {
+    padding: 1rem;
+  }
+
+  .relatorios-upload-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .relatorio-item {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+}
