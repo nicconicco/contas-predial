@@ -5,6 +5,7 @@ function ComprovanteCard({
   pendingFile,
   isAdmin,
   saving,
+  accept = '.pdf',
   onUpload,
   onConfirmUpload,
   onDownload,
@@ -50,13 +51,13 @@ function ComprovanteCard({
         </div>
       )}
 
-      {/* Botao de enviar PDF (admin) */}
+      {/* Botao de enviar (admin) */}
       {isAdmin && (
         <label className="btn-upload">
-          {nomeArquivo || pendingFile ? 'Trocar PDF' : 'Enviar PDF'}
+          {nomeArquivo || pendingFile ? 'Trocar arquivo' : 'Enviar arquivo'}
           <input
             type="file"
-            accept=".pdf"
+            accept={accept}
             onChange={(e) => onUpload(tipo, e)}
             hidden
           />
@@ -111,6 +112,7 @@ export default function ComprovantesSection({
         pendingFile={pendingFiles.divisaoAguaLuz}
         isAdmin={isAdmin}
         saving={saving}
+        accept=".pdf,.jpg,.jpeg,.png"
         onUpload={onUpload}
         onConfirmUpload={onConfirmUpload}
         onDownload={onDownload}

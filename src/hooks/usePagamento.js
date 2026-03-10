@@ -7,6 +7,7 @@ import {
   deleteComprovante,
 } from '../services/pagamento.service'
 import { MESES, ANOS } from '../constants/app'
+import { jsPDF } from 'jspdf'
 
 const CAMPO_COMPROVANTE = {
   agua: 'comprovanteAgua',
@@ -104,7 +105,7 @@ export function usePagamento() {
     }
   }
 
-  // Baixa o PDF: busca base64 do Firestore e dispara download
+  // Baixa o comprovante: se for imagem, converte para PDF antes de baixar
   async function handleDownloadComprovante(tipo) {
     setSaving(true)
     try {
@@ -114,10 +115,26 @@ export function usePagamento() {
         setSaving(false)
         return
       }
-      const link = document.createElement('a')
-      link.href = data.base64
-      link.download = data.nomeArquivo
-      link.click()
+
+      const isImage = data.base64.startsWith('data:image/')
+      if (isImage) {
+        const img = new Image()
+        img.src = data.base64
+        await new Promise((resolve, reject) => {
+          img.onload = resolve
+          img.onerror = reject
+        })
+        const orientation = img.width > img.height ? 'l' : 'p'
+        const pdf = new jsPDF(orientation, 'px', [img.width, img.height])
+        pdf.addImage(data.base64, 'JPEG', 0, 0, img.width, img.height)
+        const pdfName = data.nomeArquivo.replace(/\.(jpg|jpeg|png)$/i, '.pdf')
+        pdf.save(pdfName)
+      } else {
+        const link = document.createElement('a')
+        link.href = data.base64
+        link.download = data.nomeArquivo
+        link.click()
+      }
     } catch (err) {
       setSaveMsg(`Erro ao baixar comprovante: ${err.message}`)
     } finally {
