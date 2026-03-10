@@ -3,13 +3,13 @@ import { db } from '../config/firebase'
 import { MESES } from '../constants/app'
 
 const INQUILINOS = [
-  'Apartamento 00',
+  'Térreo',
   'Apartamento 11',
   'Apartamento 12',
   'Apartamento 21',
   'Apartamento 22',
   'Apartamento 31',
-  'Apartamento 33',
+  'Apartamento 32',
   'Casa 00',
   'Loja 00',
 ]

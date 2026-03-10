@@ -12,7 +12,7 @@ export const ANOS = ['2025', '2026']
 
 export const APARTAMENTOS = [
   'Consertos Gerais do Prédio',
-  'Apartamento 00',
+  'Térreo',
   'Apartamento 11',
   'Apartamento 12',
   'Apartamento 21',
