@@ -25,6 +25,7 @@ export default function Dashboard() {
   const apartamentos = pagamento.dadosMes?.apartamentos || []
   const comprovanteAgua = pagamento.dadosMes?.comprovanteAgua || ''
   const comprovanteLuz = pagamento.dadosMes?.comprovanteLuz || ''
+  const comprovanteDivisaoAguaLuz = pagamento.dadosMes?.comprovanteDivisaoAguaLuz || ''
 
   return (
     <div className="dashboard">
@@ -78,6 +79,7 @@ export default function Dashboard() {
         <ComprovantesSection
           comprovanteAgua={comprovanteAgua}
           comprovanteLuz={comprovanteLuz}
+          comprovanteDivisaoAguaLuz={comprovanteDivisaoAguaLuz}
           isAdmin={isAdmin}
           saving={pagamento.saving}
           pendingFiles={pagamento.pendingFiles}

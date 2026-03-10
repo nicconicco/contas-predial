@@ -69,6 +69,7 @@ function ComprovanteCard({
 export default function ComprovantesSection({
   comprovanteAgua,
   comprovanteLuz,
+  comprovanteDivisaoAguaLuz,
   isAdmin,
   saving,
   pendingFiles,
@@ -96,6 +97,18 @@ export default function ComprovantesSection({
         tipo="luz"
         nomeArquivo={comprovanteLuz}
         pendingFile={pendingFiles.luz}
+        isAdmin={isAdmin}
+        saving={saving}
+        onUpload={onUpload}
+        onConfirmUpload={onConfirmUpload}
+        onDownload={onDownload}
+        onDelete={onDelete}
+      />
+      <ComprovanteCard
+        titulo="Divisão de Água e Luz"
+        tipo="divisaoAguaLuz"
+        nomeArquivo={comprovanteDivisaoAguaLuz}
+        pendingFile={pendingFiles.divisaoAguaLuz}
         isAdmin={isAdmin}
         saving={saving}
         onUpload={onUpload}

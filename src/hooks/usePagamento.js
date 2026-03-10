@@ -8,6 +8,12 @@ import {
 } from '../services/pagamento.service'
 import { MESES, ANOS } from '../constants/app'
 
+const CAMPO_COMPROVANTE = {
+  agua: 'comprovanteAgua',
+  luz: 'comprovanteLuz',
+  divisaoAguaLuz: 'comprovanteDivisaoAguaLuz',
+}
+
 export function usePagamento() {
   const [anoSelecionado, setAnoSelecionado] = useState(ANOS[ANOS.length - 1])
   const [mesSelecionado, setMesSelecionado] = useState(MESES[0])
@@ -17,13 +23,13 @@ export function usePagamento() {
   const [error, setError] = useState('')
   const [edited, setEdited] = useState(false)
   const [saveMsg, setSaveMsg] = useState('')
-  const [pendingFiles, setPendingFiles] = useState({ agua: null, luz: null })
+  const [pendingFiles, setPendingFiles] = useState({ agua: null, luz: null, divisaoAguaLuz: null })
 
   useEffect(() => {
     setLoading(true)
     setEdited(false)
     setSaveMsg('')
-    setPendingFiles({ agua: null, luz: null })
+    setPendingFiles({ agua: null, luz: null, divisaoAguaLuz: null })
     getPagamento(anoSelecionado, mesSelecionado)
       .then((data) => {
         setDadosMes(data)
@@ -87,7 +93,7 @@ export function usePagamento() {
         pending.base64,
         pending.nomeArquivo
       )
-      const campo = tipo === 'agua' ? 'comprovanteAgua' : 'comprovanteLuz'
+      const campo = CAMPO_COMPROVANTE[tipo]
       setDadosMes((prev) => ({ ...prev, [campo]: pending.nomeArquivo }))
       setPendingFiles((prev) => ({ ...prev, [tipo]: null }))
       setSaveMsg('Comprovante enviado com sucesso!')
@@ -125,7 +131,7 @@ export function usePagamento() {
     setSaveMsg('')
     try {
       await deleteComprovante(anoSelecionado, mesSelecionado, tipo)
-      const campo = tipo === 'agua' ? 'comprovanteAgua' : 'comprovanteLuz'
+      const campo = CAMPO_COMPROVANTE[tipo]
       setDadosMes((prev) => ({ ...prev, [campo]: '' }))
       setPendingFiles((prev) => ({ ...prev, [tipo]: null }))
       setSaveMsg('Comprovante deletado.')

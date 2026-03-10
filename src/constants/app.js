@@ -18,7 +18,7 @@ export const APARTAMENTOS = [
   'Apartamento 21',
   'Apartamento 22',
   'Apartamento 31',
-  'Apartamento 33',
+  'Apartamento 32',
   'Casa 00',
   'Loja 00',
 ]
