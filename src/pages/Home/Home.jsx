@@ -44,6 +44,11 @@ export default function Home() {
             <h2>Atas</h2>
             <p>Visualizar atas e documentos</p>
           </button>
+
+          <button className="home-card" onClick={() => navigate('/agua-extra')}>
+            <h2>Sessão Especial sobre Água Extra</h2>
+            <p>Documentos e informações sobre água extra</p>
+          </button>
         </div>
       </main>
     </div>

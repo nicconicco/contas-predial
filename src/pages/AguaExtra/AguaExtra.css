@@ -1,0 +1,187 @@
+.agua-extra {
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.agua-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #1a1a2e;
+  color: #fff;
+}
+
+.agua-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.agua-header h1 {
+  font-size: 1.2rem;
+}
+
+.agua-content {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.agua-loading {
+  text-align: center;
+  color: #666;
+  padding: 2rem;
+}
+
+/* Form */
+.agua-form,
+.agua-edit-form {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.agua-form h3,
+.agua-edit-form h3 {
+  font-size: 1rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.agua-input {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.agua-input:focus {
+  outline: none;
+  border-color: #1a1a2e;
+}
+
+.agua-textarea {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  min-height: 100px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.agua-textarea:focus {
+  outline: none;
+  border-color: #1a1a2e;
+}
+
+.agua-char-count {
+  font-size: 0.75rem;
+  color: #999;
+  text-align: right;
+  margin-top: -0.5rem;
+}
+
+.agua-edit-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Lista */
+.agua-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.agua-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem 1.5rem;
+}
+
+.agua-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.agua-card-header h3 {
+  font-size: 1rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.agua-data {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.agua-observacoes {
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin: 0.5rem 0;
+}
+
+.agua-anexos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.agua-admin-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #eee;
+}
+
+.sem-registros {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 3rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .agua-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .agua-header-left {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .agua-content {
+    padding: 1rem;
+  }
+
+  .agua-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .agua-anexos {
+    flex-direction: column;
+  }
+}
