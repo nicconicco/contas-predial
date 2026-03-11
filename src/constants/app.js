@@ -8,7 +8,7 @@ export const MESES_CURTOS = [
   'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
 ]
 
-export const ANOS = ['2025', '2026']
+export const ANOS = ['2024', '2025', '2026']
 
 export const APARTAMENTOS = [
   'Consertos Gerais do Prédio',

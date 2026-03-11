@@ -39,6 +39,11 @@ export default function Home() {
             <h2>Relatórios Antigos</h2>
             <p>Visualizar e baixar relatórios antigos</p>
           </button>
+
+          <button className="home-card" onClick={() => navigate('/atas')}>
+            <h2>Atas</h2>
+            <p>Visualizar atas e documentos</p>
+          </button>
         </div>
       </main>
     </div>

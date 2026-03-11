@@ -34,6 +34,7 @@ export async function seedFirestore() {
       })),
       comprovanteAgua: '',
       comprovanteLuz: '',
+      comprovanteDivisaoAguaLuz: '',
     })
   }
   console.log('Dados 2025 criados')
@@ -51,6 +52,7 @@ export async function seedFirestore() {
       })),
       comprovanteAgua: mes === 'Janeiro' ? 'janeiro_agua.pdf' : '',
       comprovanteLuz: mes === 'Janeiro' ? 'janeiro_luz.pdf' : '',
+      comprovanteDivisaoAguaLuz: '',
     })
   }
   console.log('Dados 2026 criados')

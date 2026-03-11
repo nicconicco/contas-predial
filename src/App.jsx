@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Consertos from './pages/Consertos/Consertos'
 import Fundos from './pages/Fundos/Fundos'
 import Relatorios from './pages/Relatorios/Relatorios'
+import Atas from './pages/Atas/Atas'
 import PrivateRoute from './components/PrivateRoute'
 import Seed from './dev/Seed'
 
@@ -49,6 +50,14 @@ function App() {
         element={
           <PrivateRoute>
             <Relatorios />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/atas"
+        element={
+          <PrivateRoute>
+            <Atas />
           </PrivateRoute>
         }
       />
