@@ -1,0 +1,176 @@
+.regras {
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.regras-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #1a1a2e;
+  color: #fff;
+}
+
+.regras-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.regras-header h1 {
+  font-size: 1.2rem;
+}
+
+.regras-content {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.regras-loading {
+  text-align: center;
+  color: #666;
+  padding: 2rem;
+}
+
+/* Form */
+.regra-form,
+.regra-edit-form {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.regra-form h3,
+.regra-edit-form h3 {
+  font-size: 1rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.regra-input {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.regra-input:focus {
+  outline: none;
+  border-color: #1a1a2e;
+}
+
+.regra-textarea {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  min-height: 100px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.regra-textarea:focus {
+  outline: none;
+  border-color: #1a1a2e;
+}
+
+.regra-char-count {
+  font-size: 0.75rem;
+  color: #999;
+  text-align: right;
+  margin-top: -0.5rem;
+}
+
+.regra-edit-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Lista */
+.regras-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.regra-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem 1.5rem;
+}
+
+.regra-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.regra-card-header h3 {
+  font-size: 1rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.regra-data {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.regra-descricao {
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin: 0.5rem 0;
+}
+
+.regra-admin-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #eee;
+}
+
+.sem-regras {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 3rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .regras-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .regras-header-left {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .regras-content {
+    padding: 1rem;
+  }
+
+  .regra-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}

@@ -49,6 +49,11 @@ export default function Home() {
             <h2>Sessão Especial sobre Água Extra</h2>
             <p>Documentos e informações sobre água extra</p>
           </button>
+
+          <button className="home-card" onClick={() => navigate('/regras')}>
+            <h2>Regras</h2>
+            <p>Regras e normas do condomínio</p>
+          </button>
         </div>
       </main>
     </div>

@@ -7,6 +7,7 @@ import Fundos from './pages/Fundos/Fundos'
 import Relatorios from './pages/Relatorios/Relatorios'
 import Atas from './pages/Atas/Atas'
 import AguaExtra from './pages/AguaExtra/AguaExtra'
+import Regras from './pages/Regras/Regras'
 import PrivateRoute from './components/PrivateRoute'
 import Seed from './dev/Seed'
 
@@ -67,6 +68,14 @@ function App() {
         element={
           <PrivateRoute>
             <AguaExtra />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/regras"
+        element={
+          <PrivateRoute>
+            <Regras />
           </PrivateRoute>
         }
       />
