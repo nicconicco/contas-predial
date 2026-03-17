@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore'
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../config/firebase'
 
 function toApartamentoId(nome) {
@@ -22,6 +22,16 @@ export async function addObservacao(nome, dados) {
     descricao: dados.descricao,
     custo: dados.custo,
     criadoEm: dados.criadoEm,
+    anexos: dados.anexos,
+  })
+}
+
+export async function updateObservacao(nome, obsId, dados) {
+  const id = toApartamentoId(nome)
+  await updateDoc(doc(db, 'consertos', id, 'observacoes', obsId), {
+    titulo: dados.titulo,
+    descricao: dados.descricao,
+    custo: dados.custo,
     anexos: dados.anexos,
   })
 }

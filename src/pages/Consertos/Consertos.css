@@ -171,6 +171,94 @@
   cursor: not-allowed;
 }
 
+/* Admin actions */
+.obs-admin-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-edit-obs {
+  padding: 0.4rem 1rem;
+  background-color: #f0ad4e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-edit-obs:hover {
+  background-color: #ec971f;
+}
+
+.btn-edit-obs:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Edit mode */
+.obs-card-editando {
+  border: 2px solid #f0ad4e;
+}
+
+.obs-edit-title {
+  font-size: 1.05rem;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+}
+
+.obs-edit-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.btn-salvar-edit {
+  flex: 1;
+  padding: 0.6rem;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-salvar-edit:hover {
+  background-color: #218838;
+}
+
+.btn-salvar-edit:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.btn-cancelar-edit {
+  flex: 1;
+  padding: 0.6rem;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-cancelar-edit:hover {
+  background-color: #5a6268;
+}
+
+.btn-cancelar-edit:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
 /* Formulario nova observacao */
 .obs-form {
   background: #fff;

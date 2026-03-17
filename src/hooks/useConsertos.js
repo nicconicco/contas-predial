@@ -2,6 +2,7 @@ import { useState } from 'react'
 import {
   getObservacoes,
   addObservacao,
+  updateObservacao,
   deleteObservacao,
 } from '../services/conserto.service'
 
@@ -57,6 +58,22 @@ export function useConsertos() {
     }
   }
 
+  async function handleEditObservacao(obsId, dados) {
+    setSaving(true)
+    setSaveMsg('')
+    try {
+      await updateObservacao(apartamentoSelecionado, obsId, dados)
+      setObservacoes((prev) =>
+        prev.map((o) => (o.id === obsId ? { ...o, ...dados } : o))
+      )
+      setSaveMsg('Observação atualizada com sucesso!')
+    } catch (err) {
+      setSaveMsg(`Erro ao atualizar: ${err.message}`)
+    } finally {
+      setSaving(false)
+    }
+  }
+
   async function handleDeleteObservacao(obsId) {
     setSaving(true)
     setSaveMsg('')
@@ -80,6 +97,7 @@ export function useConsertos() {
     selectApartamento,
     voltarParaLista,
     handleAddObservacao,
+    handleEditObservacao,
     handleDeleteObservacao,
   }
 }

@@ -96,12 +96,112 @@ function NovaObservacaoForm({ saving, onSubmit }) {
   )
 }
 
-function ObservacaoCard({ obs, isAdmin, saving, onDelete }) {
+function ObservacaoCard({ obs, isAdmin, saving, onDelete, onEdit }) {
+  const [editando, setEditando] = useState(false)
+  const [titulo, setTitulo] = useState(obs.titulo)
+  const [descricao, setDescricao] = useState(obs.descricao || '')
+  const [custo, setCusto] = useState(String(obs.custo || 0))
+  const [anexos, setAnexos] = useState(obs.anexos || [])
+
   function handleDownload(anexo) {
     const link = document.createElement('a')
     link.href = anexo.base64
     link.download = anexo.nomeArquivo
     link.click()
+  }
+
+  function handleAddAnexo(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => {
+      setAnexos((prev) => [...prev, { nomeArquivo: file.name, base64: reader.result }])
+    }
+    reader.readAsDataURL(file)
+    e.target.value = ''
+  }
+
+  function handleRemoveAnexo(index) {
+    setAnexos((prev) => prev.filter((_, i) => i !== index))
+  }
+
+  function handleCancelar() {
+    setTitulo(obs.titulo)
+    setDescricao(obs.descricao || '')
+    setCusto(String(obs.custo || 0))
+    setAnexos(obs.anexos || [])
+    setEditando(false)
+  }
+
+  function handleSalvar() {
+    if (!titulo.trim()) return
+    onEdit(obs.id, {
+      titulo: titulo.trim(),
+      descricao: descricao.trim(),
+      custo: parseFloat(custo) || 0,
+      anexos,
+    })
+    setEditando(false)
+  }
+
+  if (editando) {
+    return (
+      <div className="obs-card obs-card-editando">
+        <h3 className="obs-edit-title">Editando Observação</h3>
+        <input
+          type="text"
+          value={titulo}
+          onChange={(e) => setTitulo(e.target.value)}
+          className="obs-input"
+          placeholder="Título"
+          required
+        />
+        <textarea
+          value={descricao}
+          onChange={(e) => setDescricao(e.target.value.slice(0, 1024))}
+          className="obs-textarea"
+          placeholder="Descrição (máx. 1024 caracteres)"
+          maxLength={1024}
+        />
+        <div className="obs-char-count">{descricao.length}/1024</div>
+        <input
+          type="number"
+          value={custo}
+          onChange={(e) => setCusto(e.target.value)}
+          className="obs-input"
+          placeholder="Custo (R$)"
+          min="0"
+          step="0.01"
+        />
+
+        {anexos.length > 0 && (
+          <ul className="anexos-pendentes">
+            {anexos.map((a, i) => (
+              <li key={i}>
+                <span>{a.nomeArquivo}</span>
+                <button type="button" className="btn-remove-anexo" onClick={() => handleRemoveAnexo(i)}>
+                  Remover
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <label className="btn-add-anexo">
+          Adicionar Imagem/PDF
+          <input type="file" accept="image/*,.pdf" onChange={handleAddAnexo} hidden />
+        </label>
+
+        <div className="obs-edit-actions">
+          <button className="btn-salvar-edit" onClick={handleSalvar} disabled={saving || !titulo.trim()}>
+            {saving ? 'Salvando...' : 'Salvar'}
+          </button>
+          <button className="btn-cancelar-edit" onClick={handleCancelar} disabled={saving}>
+            Cancelar
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -124,9 +224,14 @@ function ObservacaoCard({ obs, isAdmin, saving, onDelete }) {
       )}
 
       {isAdmin && (
-        <button className="btn-delete-obs" onClick={() => onDelete(obs.id)} disabled={saving}>
-          Deletar
-        </button>
+        <div className="obs-admin-actions">
+          <button className="btn-edit-obs" onClick={() => setEditando(true)} disabled={saving}>
+            Editar
+          </button>
+          <button className="btn-delete-obs" onClick={() => onDelete(obs.id)} disabled={saving}>
+            Deletar
+          </button>
+        </div>
       )}
     </div>
   )
@@ -175,6 +280,7 @@ export default function Consertos() {
               isAdmin={isAdmin}
               saving={consertos.saving}
               onDelete={consertos.handleDeleteObservacao}
+              onEdit={consertos.handleEditObservacao}
             />
           ))}
 
