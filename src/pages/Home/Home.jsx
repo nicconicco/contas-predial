@@ -54,6 +54,11 @@ export default function Home() {
             <h2>Regras</h2>
             <p>Regras e normas do condomínio</p>
           </button>
+
+          <button className="home-card" onClick={() => navigate('/secoes')}>
+            <h2>Seções</h2>
+            <p>Seções personalizadas e anotações</p>
+          </button>
         </div>
       </main>
     </div>

@@ -8,6 +8,7 @@ import Relatorios from './pages/Relatorios/Relatorios'
 import Atas from './pages/Atas/Atas'
 import AguaExtra from './pages/AguaExtra/AguaExtra'
 import Regras from './pages/Regras/Regras'
+import Secoes from './pages/Secoes/Secoes'
 import PrivateRoute from './components/PrivateRoute'
 import Seed from './dev/Seed'
 
@@ -76,6 +77,14 @@ function App() {
         element={
           <PrivateRoute>
             <Regras />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/secoes"
+        element={
+          <PrivateRoute>
+            <Secoes />
           </PrivateRoute>
         }
       />

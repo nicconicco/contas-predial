@@ -1,0 +1,396 @@
+.secoes {
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+/* Header */
+.secoes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #1a1a2e;
+  color: #fff;
+}
+
+.secoes-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.secoes-header h1 {
+  font-size: 1.2rem;
+}
+
+.secoes-header-subtitulo {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.15rem;
+}
+
+/* Content */
+.secoes-content {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.secoes-loading {
+  text-align: center;
+  color: #666;
+  padding: 2rem;
+}
+
+.sem-anotacoes {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 2rem;
+}
+
+/* Grid de seções */
+.secoes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.secao-card {
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.secao-card:hover {
+  border-color: #1a1a2e;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.secao-card h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 0.25rem;
+}
+
+.secao-subtitulo {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.secao-card-editando {
+  border-color: #f0ad4e;
+  cursor: default;
+}
+
+.secao-card-editando:hover {
+  transform: none;
+}
+
+.secao-admin-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+.btn-edit-secao {
+  padding: 0.3rem 0.8rem;
+  background-color: #f0ad4e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-edit-secao:hover {
+  background-color: #ec971f;
+}
+
+.btn-edit-secao:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.btn-delete-secao {
+  padding: 0.3rem 0.8rem;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-delete-secao:hover {
+  background-color: #c0392b;
+}
+
+.btn-delete-secao:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.secao-edit-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+/* Formulários */
+.secao-form {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.secao-form h3 {
+  font-size: 1.05rem;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+}
+
+.secao-input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.secao-input:focus {
+  border-color: #4a90d9;
+}
+
+.secao-textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  min-height: 100px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.secao-textarea:focus {
+  border-color: #4a90d9;
+}
+
+.secao-char-count {
+  text-align: right;
+  font-size: 0.75rem;
+  color: #999;
+  margin-bottom: 0.75rem;
+  margin-top: -0.5rem;
+}
+
+/* Anotação card */
+.anotacao-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.anotacao-card-editando {
+  border: 2px solid #f0ad4e;
+}
+
+.anotacao-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.anotacao-card-header h3 {
+  font-size: 1.05rem;
+  color: #1a1a2e;
+}
+
+.anotacao-data {
+  font-size: 0.8rem;
+  color: #888;
+  white-space: nowrap;
+}
+
+.anotacao-descricao {
+  color: #444;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  white-space: pre-wrap;
+}
+
+.anotacao-custo {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 0.75rem;
+}
+
+.anotacao-edit-title {
+  font-size: 1.05rem;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+}
+
+.anotacao-anexos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.anotacao-admin-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-edit-anotacao {
+  padding: 0.4rem 1rem;
+  background-color: #f0ad4e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-edit-anotacao:hover {
+  background-color: #ec971f;
+}
+
+.btn-edit-anotacao:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.btn-delete-anotacao {
+  padding: 0.4rem 1rem;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-delete-anotacao:hover {
+  background-color: #c0392b;
+}
+
+.btn-delete-anotacao:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.anotacao-edit-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.btn-salvar-edit {
+  flex: 1;
+  padding: 0.6rem;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-salvar-edit:hover {
+  background-color: #218838;
+}
+
+.btn-salvar-edit:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.btn-cancelar-edit {
+  flex: 1;
+  padding: 0.6rem;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-cancelar-edit:hover {
+  background-color: #5a6268;
+}
+
+.btn-cancelar-edit:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .secoes-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .secoes-header-left {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .secoes-content {
+    padding: 1rem;
+  }
+
+  .secoes-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .anotacao-card-header {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .secoes-grid {
+    grid-template-columns: 1fr;
+  }
+}
