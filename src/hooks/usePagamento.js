@@ -5,9 +5,11 @@ import {
   saveComprovante,
   getComprovante,
   deleteComprovante,
+  getAllPagamentosAno,
 } from '../services/pagamento.service'
-import { MESES, ANOS } from '../constants/app'
+import { MESES, MESES_CURTOS, ANOS, APARTAMENTOS } from '../constants/app'
 import { jsPDF } from 'jspdf'
+import * as XLSX from 'xlsx'
 
 const CAMPO_COMPROVANTE = {
   agua: 'comprovanteAgua',
@@ -25,6 +27,7 @@ export function usePagamento() {
   const [edited, setEdited] = useState(false)
   const [saveMsg, setSaveMsg] = useState('')
   const [pendingFiles, setPendingFiles] = useState({ agua: null, luz: null, divisaoAguaLuz: null })
+  const [gerando, setGerando] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -186,6 +189,51 @@ export function usePagamento() {
     }
   }
 
+  async function handleGerarPlanilha() {
+    setGerando(true)
+    setSaveMsg('')
+    try {
+      const todosMeses = await getAllPagamentosAno(anoSelecionado, MESES)
+
+      // Header: Apartamento + 3 colunas por mês (Valor, Água, Luz) + totais
+      const header = ['Apartamento']
+      MESES_CURTOS.forEach((mes) => {
+        header.push(`${mes} Valor`, `${mes} Água`, `${mes} Luz`)
+      })
+      header.push('Total Pago', 'Total em Dívida')
+
+      const rows = APARTAMENTOS.map((nomeApt) => {
+        const row = [nomeApt]
+        let totalPago = 0
+        let totalDivida = 0
+        todosMeses.forEach((dadosMes) => {
+          const apt = (dadosMes.apartamentos || []).find((a) => a.nome === nomeApt)
+          const valor = apt && apt.valorTotal ? Number(apt.valorTotal) || 0 : 0
+          const agua = apt ? (apt.pagamentoAgua || 'Não') : 'Não'
+          const luz = apt ? (apt.pagamentoLuz || 'Não') : 'Não'
+          row.push(valor, agua, luz)
+          if (agua === 'Sim' && luz === 'Sim') {
+            totalPago += valor
+          } else {
+            totalDivida += valor
+          }
+        })
+        row.push(totalPago, totalDivida)
+        return row
+      })
+
+      const ws = XLSX.utils.aoa_to_sheet([header, ...rows])
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, ws, anoSelecionado)
+      XLSX.writeFile(wb, `pagamentos_${anoSelecionado}.xlsx`)
+      setSaveMsg('Planilha gerada com sucesso!')
+    } catch (err) {
+      setSaveMsg(`Erro ao gerar planilha: ${err.message}`)
+    } finally {
+      setGerando(false)
+    }
+  }
+
   return {
     anoSelecionado,
     setAnoSelecionado,
@@ -198,6 +246,7 @@ export function usePagamento() {
     edited,
     saveMsg,
     pendingFiles,
+    gerando,
     handlePessoas,
     handleValorTotal,
     togglePayment,
@@ -206,5 +255,6 @@ export function usePagamento() {
     handleDownloadComprovante,
     handleDeleteComprovante,
     handleSave,
+    handleGerarPlanilha,
   }
 }

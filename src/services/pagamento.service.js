@@ -61,3 +61,9 @@ export async function deleteComprovante(ano, mes, tipo) {
   const campo = CAMPO_COMPROVANTE[tipo]
   await updateDoc(mesRef(ano, mes), { [campo]: '' })
 }
+
+// Busca dados de todos os 12 meses de um ano em paralelo
+export async function getAllPagamentosAno(ano, meses) {
+  const results = await Promise.all(meses.map((mes) => getPagamento(ano, mes)))
+  return results
+}

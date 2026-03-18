@@ -65,6 +65,18 @@ export default function Dashboard() {
           onSelect={pagamento.setMesSelecionado}
         />
 
+        {isAdmin && (
+          <button
+            className="btn-planilha"
+            onClick={pagamento.handleGerarPlanilha}
+            disabled={pagamento.gerando}
+          >
+            {pagamento.gerando
+              ? 'Gerando...'
+              : 'Gerar planilha com valores de todos os meses e apartamentos'}
+          </button>
+        )}
+
         <h2 className="section-title">{pagamento.mesSelecionado} {pagamento.anoSelecionado}</h2>
 
         <PaymentTable
