@@ -73,6 +73,7 @@ export default function Dashboard() {
           saving={pagamento.saving}
           onTogglePayment={pagamento.togglePayment}
           onChangePessoas={pagamento.handlePessoas}
+          onChangeValorTotal={pagamento.handleValorTotal}
           onSave={pagamento.handleSave}
         />
 

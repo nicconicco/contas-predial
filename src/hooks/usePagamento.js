@@ -55,6 +55,19 @@ export function usePagamento() {
     setSaveMsg('')
   }
 
+  function handleValorTotal(index, value) {
+    const num = parseFloat(value)
+    if (value !== '' && (isNaN(num) || num < 0)) return
+    setDadosMes((prev) => ({
+      ...prev,
+      apartamentos: prev.apartamentos.map((row, i) =>
+        i === index ? { ...row, valorTotal: value === '' ? '' : num } : row
+      ),
+    }))
+    setEdited(true)
+    setSaveMsg('')
+  }
+
   function togglePayment(index, field) {
     setDadosMes((prev) => ({
       ...prev,
@@ -186,6 +199,7 @@ export function usePagamento() {
     saveMsg,
     pendingFiles,
     handlePessoas,
+    handleValorTotal,
     togglePayment,
     handleComprovante,
     handleConfirmUpload,

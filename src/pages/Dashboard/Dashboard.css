@@ -275,6 +275,21 @@ tbody tr:hover {
   border-color: #4a90d9;
 }
 
+.input-valor-total {
+  width: 80px;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-valor-total:focus {
+  border-color: #4a90d9;
+}
+
 /* Botão Atualizar (admin) */
 .btn-atualizar {
   padding: 0.35rem 0.8rem;

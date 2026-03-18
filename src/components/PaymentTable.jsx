@@ -4,6 +4,7 @@ export default function PaymentTable({
   saving,
   onTogglePayment,
   onChangePessoas,
+  onChangeValorTotal,
   onSave,
 }) {
   return (
@@ -15,6 +16,7 @@ export default function PaymentTable({
             <th>Qtd. Pessoas</th>
             <th>Pagamento Água</th>
             <th>Pagamento Luz</th>
+            {isAdmin && <th>Valor Total</th>}
             {isAdmin && <th>Ações</th>}
           </tr>
         </thead>
@@ -63,6 +65,19 @@ export default function PaymentTable({
                   </span>
                 )}
               </td>
+              {isAdmin && (
+                <td>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    className="input-valor-total"
+                    value={row.valorTotal ?? ''}
+                    placeholder="0,00"
+                    onChange={(e) => onChangeValorTotal(index, e.target.value)}
+                  />
+                </td>
+              )}
               {isAdmin && (
                 <td>
                   <button className="btn-atualizar" onClick={onSave} disabled={saving}>
