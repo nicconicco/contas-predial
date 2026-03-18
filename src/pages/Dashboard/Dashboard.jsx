@@ -87,6 +87,9 @@ export default function Dashboard() {
           onChangePessoas={pagamento.handlePessoas}
           onChangeValorTotal={pagamento.handleValorTotal}
           onSave={pagamento.handleSave}
+          onUploadComprovanteApt={pagamento.handleComprovanteApt}
+          onDownloadComprovanteApt={pagamento.handleDownloadComprovanteApt}
+          onDeleteComprovanteApt={pagamento.handleDeleteComprovanteApt}
         />
 
         <ComprovantesSection

@@ -6,6 +6,9 @@ import {
   getComprovante,
   deleteComprovante,
   getAllPagamentosAno,
+  saveComprovanteApt,
+  getComprovanteApt,
+  deleteComprovanteApt,
 } from '../services/pagamento.service'
 import { MESES, MESES_CURTOS, ANOS, APARTAMENTOS } from '../constants/app'
 import { jsPDF } from 'jspdf'
@@ -189,6 +192,92 @@ export function usePagamento() {
     }
   }
 
+  // --- Comprovante por apartamento ---
+
+  async function handleComprovanteApt(index, e) {
+    const file = e.target.files[0]
+    if (!file) return
+    const nomeApt = dadosMes.apartamentos[index].nome
+    setSaving(true)
+    setSaveMsg('')
+    try {
+      const reader = new FileReader()
+      const base64 = await new Promise((resolve, reject) => {
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = reject
+        reader.readAsDataURL(file)
+      })
+      await saveComprovanteApt(anoSelecionado, mesSelecionado, nomeApt, base64, file.name)
+      setDadosMes((prev) => ({
+        ...prev,
+        apartamentos: prev.apartamentos.map((row, i) =>
+          i === index ? { ...row, comprovantePdf: file.name } : row
+        ),
+      }))
+      setSaveMsg('Comprovante do apartamento enviado com sucesso!')
+    } catch (err) {
+      setSaveMsg(`Erro ao enviar comprovante: ${err.message}`)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function handleDownloadComprovanteApt(index) {
+    const nomeApt = dadosMes.apartamentos[index].nome
+    setSaving(true)
+    try {
+      const data = await getComprovanteApt(anoSelecionado, mesSelecionado, nomeApt)
+      if (!data) {
+        setSaveMsg('Comprovante não encontrado.')
+        setSaving(false)
+        return
+      }
+      const isImage = data.base64.startsWith('data:image/')
+      if (isImage) {
+        const img = new Image()
+        img.src = data.base64
+        await new Promise((resolve, reject) => {
+          img.onload = resolve
+          img.onerror = reject
+        })
+        const orientation = img.width > img.height ? 'l' : 'p'
+        const pdf = new jsPDF(orientation, 'px', [img.width, img.height])
+        pdf.addImage(data.base64, 'JPEG', 0, 0, img.width, img.height)
+        const pdfName = data.nomeArquivo.replace(/\.(jpg|jpeg|png)$/i, '.pdf')
+        pdf.save(pdfName)
+      } else {
+        const link = document.createElement('a')
+        link.href = data.base64
+        link.download = data.nomeArquivo
+        link.click()
+      }
+    } catch (err) {
+      setSaveMsg(`Erro ao baixar comprovante: ${err.message}`)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function handleDeleteComprovanteApt(index) {
+    const nomeApt = dadosMes.apartamentos[index].nome
+    setSaving(true)
+    setSaveMsg('')
+    try {
+      await deleteComprovanteApt(anoSelecionado, mesSelecionado, nomeApt)
+      setDadosMes((prev) => ({
+        ...prev,
+        apartamentos: prev.apartamentos.map((row, i) =>
+          i === index ? { ...row, comprovantePdf: '' } : row
+        ),
+      }))
+      setSaveMsg('Comprovante do apartamento deletado.')
+    } catch (err) {
+      setSaveMsg(`Erro ao deletar comprovante: ${err.message}`)
+    } finally {
+      setSaving(false)
+    }
+  }
+
   async function handleGerarPlanilha() {
     setGerando(true)
     setSaveMsg('')
@@ -256,5 +345,8 @@ export function usePagamento() {
     handleDeleteComprovante,
     handleSave,
     handleGerarPlanilha,
+    handleComprovanteApt,
+    handleDownloadComprovanteApt,
+    handleDeleteComprovanteApt,
   }
 }

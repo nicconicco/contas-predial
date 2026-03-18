@@ -315,6 +315,87 @@ tbody tr:hover {
   border-color: #4a90d9;
 }
 
+/* Comprovante por apartamento (admin) */
+.cell-comprovante {
+  min-width: 130px;
+}
+
+.comprovante-apt-nome {
+  display: block;
+  font-size: 0.75rem;
+  color: #333;
+  word-break: break-all;
+  margin-bottom: 0.3rem;
+}
+
+.comprovante-apt-actions {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.btn-download-sm {
+  padding: 0.2rem 0.5rem;
+  background-color: #4a90d9;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-download-sm:hover {
+  background-color: #357abd;
+}
+
+.btn-delete-sm {
+  padding: 0.2rem 0.5rem;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-delete-sm:hover {
+  background-color: #c0392b;
+}
+
+.btn-download-sm:disabled,
+.btn-delete-sm:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.btn-upload-sm {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  background-color: #6c757d;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-upload-sm:hover {
+  background-color: #5a6268;
+}
+
+.sem-comprovante-apt {
+  display: block;
+  font-size: 0.75rem;
+  color: #999;
+  font-style: italic;
+  margin-bottom: 0.3rem;
+}
+
 /* Botão Atualizar (admin) */
 .btn-atualizar {
   padding: 0.35rem 0.8rem;

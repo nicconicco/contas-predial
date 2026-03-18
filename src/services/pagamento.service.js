@@ -67,3 +67,27 @@ export async function getAllPagamentosAno(ano, meses) {
   const results = await Promise.all(meses.map((mes) => getPagamento(ano, mes)))
   return results
 }
+
+// --- Comprovante por apartamento ---
+
+function sanitizeNome(nome) {
+  return nome.replace(/\s+/g, '_')
+}
+
+function comprovanteAptRef(ano, mes, nomeApt) {
+  return doc(db, 'pagamentos', ano, 'comprovantes', `${mes}_apt_${sanitizeNome(nomeApt)}`)
+}
+
+export async function saveComprovanteApt(ano, mes, nomeApt, base64, nomeArquivo) {
+  await setDoc(comprovanteAptRef(ano, mes, nomeApt), { base64, nomeArquivo })
+}
+
+export async function getComprovanteApt(ano, mes, nomeApt) {
+  const snap = await getDoc(comprovanteAptRef(ano, mes, nomeApt))
+  if (snap.exists()) return snap.data()
+  return null
+}
+
+export async function deleteComprovanteApt(ano, mes, nomeApt) {
+  await deleteDoc(comprovanteAptRef(ano, mes, nomeApt))
+}
