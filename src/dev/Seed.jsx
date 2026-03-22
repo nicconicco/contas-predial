@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { seedFirestore } from './seedFirestore'
+import { seedFirestore, resetPagamentos2025 } from './seedFirestore'
 import { seedHistorico } from './seedHistorico'
 
 export default function Seed() {
@@ -51,6 +51,25 @@ export default function Seed() {
         <p>Popula pagamentos de Out/2024 a Dez/2025 com dados da planilha.</p>
         <button onClick={handleSeedHistorico} disabled={running} style={btnStyle}>
           {running ? 'Executando...' : 'Executar Seed Histórico'}
+        </button>
+      </div>
+
+      <div style={{ marginBottom: '2rem' }}>
+        <h3>Reset Pagamentos 2025</h3>
+        <p>Coloca todos os apartamentos de 2025 com status Não (água e luz), preservando demais dados.</p>
+        <button onClick={async () => {
+          setRunning(true)
+          setStatus('Resetando pagamentos 2025...')
+          try {
+            await resetPagamentos2025()
+            setStatus('Reset 2025 completo! Todos os apartamentos estão como Não.')
+          } catch (err) {
+            setStatus(`Erro: ${err.message}`)
+          } finally {
+            setRunning(false)
+          }
+        }} disabled={running} style={btnStyle}>
+          {running ? 'Executando...' : 'Resetar Pagamentos 2025'}
         </button>
       </div>
 

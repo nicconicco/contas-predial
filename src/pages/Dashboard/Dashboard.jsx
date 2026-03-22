@@ -77,6 +77,16 @@ export default function Dashboard() {
           </button>
         )}
 
+        {isAdmin && (
+          <button
+            className="btn-reset-nao"
+            onClick={pagamento.handleResetTodosNao}
+            disabled={pagamento.saving}
+          >
+            Colocar todos como não
+          </button>
+        )}
+
         <h2 className="section-title">{pagamento.mesSelecionado} {pagamento.anoSelecionado}</h2>
 
         <PaymentTable

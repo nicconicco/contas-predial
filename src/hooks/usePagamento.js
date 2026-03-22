@@ -85,6 +85,19 @@ export function usePagamento() {
     setSaveMsg('')
   }
 
+  function handleResetTodosNao() {
+    setDadosMes((prev) => ({
+      ...prev,
+      apartamentos: prev.apartamentos.map((row) => ({
+        ...row,
+        pagamentoAgua: 'Não',
+        pagamentoLuz: 'Não',
+      })),
+    }))
+    setEdited(true)
+    setSaveMsg('')
+  }
+
   // Le o arquivo como base64 e guarda em pendingFiles ate confirmar
   function handleComprovante(tipo, e) {
     const file = e.target.files[0]
@@ -348,5 +361,6 @@ export function usePagamento() {
     handleComprovanteApt,
     handleDownloadComprovanteApt,
     handleDeleteComprovanteApt,
+    handleResetTodosNao,
   }
 }

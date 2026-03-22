@@ -1,4 +1,4 @@
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { db } from '../config/firebase'
 import { MESES } from '../constants/app'
 
@@ -85,4 +85,21 @@ export async function seedFirestore() {
   }
   console.log('Fundos 2026 criados')
   console.log('Seed completo!')
+}
+
+export async function resetPagamentos2025() {
+  for (const mes of MESES) {
+    const ref = doc(db, 'pagamentos', '2025', 'meses', mes)
+    const snap = await getDoc(ref)
+    if (!snap.exists()) continue
+    const data = snap.data()
+    const apartamentos = (data.apartamentos || []).map((apt) => ({
+      ...apt,
+      pagamentoAgua: 'Não',
+      pagamentoLuz: 'Não',
+    }))
+    await setDoc(ref, { ...data, apartamentos })
+    console.log(`${mes} 2025 resetado`)
+  }
+  console.log('Reset 2025 completo!')
 }
