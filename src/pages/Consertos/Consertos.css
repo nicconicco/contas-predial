@@ -388,6 +388,102 @@
   cursor: not-allowed;
 }
 
+/* Carrossel de anexos */
+.consertos .anexo-carrossel {
+  margin-bottom: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+.consertos .carrossel-viewer {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.consertos .carrossel-preview {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 350px;
+  background: #1a1a2e;
+  overflow: hidden;
+}
+
+.consertos .carrossel-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.consertos .carrossel-preview iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+}
+
+.consertos .carrossel-seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: #1a1a2e;
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.consertos .carrossel-seta:hover {
+  background: #fff;
+}
+
+.consertos .carrossel-seta-esq {
+  left: 8px;
+}
+
+.consertos .carrossel-seta-dir {
+  right: 8px;
+}
+
+.consertos .carrossel-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  border-top: 1px solid #e0e0e0;
+  background: #fff;
+}
+
+.consertos .carrossel-contador {
+  font-size: 0.8rem;
+  color: #888;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.consertos .carrossel-nome {
+  flex: 1;
+  font-size: 0.85rem;
+  color: #444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .consertos-header {
@@ -413,10 +509,24 @@
     flex-direction: column;
     gap: 0.25rem;
   }
+
+  .consertos .carrossel-preview {
+    height: 250px;
+  }
 }
 
 @media (max-width: 480px) {
   .apartamentos-grid {
     grid-template-columns: 1fr;
+  }
+
+  .consertos .carrossel-preview {
+    height: 200px;
+  }
+
+  .consertos .carrossel-info {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
   }
 }
