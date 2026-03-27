@@ -4,7 +4,10 @@ import { getSenhas } from '../services/auth.service'
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => {
+    const saved = localStorage.getItem('user')
+    return saved ? JSON.parse(saved) : null
+  })
   const [senhas, setSenhas] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -23,11 +26,15 @@ export function AuthProvider({ children }) {
     if (!senhas) return { success: false }
 
     if (password === senhas.admin) {
-      setUser({ role: 'admin' })
+      const u = { role: 'admin' }
+      setUser(u)
+      localStorage.setItem('user', JSON.stringify(u))
       return { success: true }
     }
     if (password === senhas.normal) {
-      setUser({ role: 'viewer' })
+      const u = { role: 'viewer' }
+      setUser(u)
+      localStorage.setItem('user', JSON.stringify(u))
       return { success: true }
     }
     return { success: false }
@@ -35,6 +42,7 @@ export function AuthProvider({ children }) {
 
   function logout() {
     setUser(null)
+    localStorage.removeItem('user')
   }
 
   return (
