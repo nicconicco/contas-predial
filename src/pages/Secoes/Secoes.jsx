@@ -210,6 +210,65 @@ function NovaAnotacaoForm({ saving, onSubmit }) {
   )
 }
 
+/* ── Carrossel de Anexos ── */
+
+function AnexoCarrossel({ anexos }) {
+  const [indice, setIndice] = useState(0)
+  const anexo = anexos[indice]
+  const isImagem = anexo.base64.startsWith('data:image/')
+
+  function anterior() {
+    setIndice((prev) => (prev === 0 ? anexos.length - 1 : prev - 1))
+  }
+
+  function proximo() {
+    setIndice((prev) => (prev === anexos.length - 1 ? 0 : prev + 1))
+  }
+
+  function handleDownload() {
+    const link = document.createElement('a')
+    link.href = anexo.base64
+    link.download = anexo.nomeArquivo
+    link.click()
+  }
+
+  return (
+    <div className="anexo-carrossel">
+      <div className="carrossel-viewer">
+        {anexos.length > 1 && (
+          <button className="carrossel-seta carrossel-seta-esq" onClick={anterior}>
+            &#8249;
+          </button>
+        )}
+
+        <div className="carrossel-preview">
+          {isImagem ? (
+            <img src={anexo.base64} alt={anexo.nomeArquivo} />
+          ) : (
+            <iframe src={anexo.base64} title={anexo.nomeArquivo} />
+          )}
+        </div>
+
+        {anexos.length > 1 && (
+          <button className="carrossel-seta carrossel-seta-dir" onClick={proximo}>
+            &#8250;
+          </button>
+        )}
+      </div>
+
+      <div className="carrossel-info">
+        {anexos.length > 1 && (
+          <span className="carrossel-contador">{indice + 1} / {anexos.length}</span>
+        )}
+        <span className="carrossel-nome">{anexo.nomeArquivo}</span>
+        <button className="btn-download-anexo" onClick={handleDownload}>
+          Baixar
+        </button>
+      </div>
+    </div>
+  )
+}
+
 /* ── Card de Anotação ── */
 
 function AnotacaoCard({ anotacao, isAdmin, saving, onEdit, onDelete }) {
@@ -331,13 +390,7 @@ function AnotacaoCard({ anotacao, isAdmin, saving, onEdit, onDelete }) {
       )}
 
       {anotacao.anexos && anotacao.anexos.length > 0 && (
-        <div className="anotacao-anexos">
-          {anotacao.anexos.map((a, i) => (
-            <button key={i} className="btn-download-anexo" onClick={() => handleDownload(a)}>
-              {a.nomeArquivo}
-            </button>
-          ))}
-        </div>
+        <AnexoCarrossel anexos={anotacao.anexos} />
       )}
 
       {isAdmin && (

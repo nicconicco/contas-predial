@@ -258,6 +258,102 @@
   margin-bottom: 1rem;
 }
 
+/* Carrossel de anexos */
+.anexo-carrossel {
+  margin-bottom: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+.carrossel-viewer {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.carrossel-preview {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 350px;
+  background: #1a1a2e;
+  overflow: hidden;
+}
+
+.carrossel-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.carrossel-preview iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+}
+
+.carrossel-seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: #1a1a2e;
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.carrossel-seta:hover {
+  background: #fff;
+}
+
+.carrossel-seta-esq {
+  left: 8px;
+}
+
+.carrossel-seta-dir {
+  right: 8px;
+}
+
+.carrossel-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  border-top: 1px solid #e0e0e0;
+  background: #fff;
+}
+
+.carrossel-contador {
+  font-size: 0.8rem;
+  color: #888;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.carrossel-nome {
+  flex: 1;
+  font-size: 0.85rem;
+  color: #444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .anotacao-anexos {
   display: flex;
   flex-wrap: wrap;
@@ -362,6 +458,23 @@
   cursor: not-allowed;
 }
 
+.btn-download-anexo {
+  padding: 0.35rem 0.8rem;
+  background-color: #4a90d9;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-download-anexo:hover {
+  background-color: #357abd;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .secoes-header {
@@ -387,10 +500,24 @@
     flex-direction: column;
     gap: 0.25rem;
   }
+
+  .carrossel-preview {
+    height: 250px;
+  }
 }
 
 @media (max-width: 480px) {
   .secoes-grid {
     grid-template-columns: 1fr;
+  }
+
+  .carrossel-preview {
+    height: 200px;
+  }
+
+  .carrossel-info {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
   }
 }
