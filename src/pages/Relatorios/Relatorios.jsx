@@ -1,7 +1,53 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useRelatorios } from '../../hooks/useRelatorios'
 import './Relatorios.css'
+
+function RelatorioPreview({ relatorio, isAdmin, saving, onDownload, onDelete }) {
+  const [aberto, setAberto] = useState(false)
+
+  function handleDownload() {
+    const link = document.createElement('a')
+    link.href = relatorio.base64
+    link.download = relatorio.nomeArquivo
+    link.click()
+  }
+
+  return (
+    <div className="relatorio-item">
+      <div className="relatorio-top">
+        <div className="relatorio-info">
+          <span className="relatorio-nome">{relatorio.nomeArquivo}</span>
+          <span className="relatorio-data">{relatorio.criadoEm}</span>
+        </div>
+        <div className="relatorio-actions">
+          <button className="btn-preview" onClick={() => setAberto(!aberto)}>
+            {aberto ? 'Fechar' : 'Visualizar'}
+          </button>
+          <button className="btn-download" onClick={handleDownload}>
+            Baixar PDF
+          </button>
+          {isAdmin && (
+            <button
+              className="btn-delete"
+              onClick={() => onDelete(relatorio.id)}
+              disabled={saving}
+            >
+              Deletar
+            </button>
+          )}
+        </div>
+      </div>
+
+      {aberto && (
+        <div className="relatorio-preview-container">
+          <iframe src={relatorio.base64} title={relatorio.nomeArquivo} />
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function Relatorios() {
   const { user, logout } = useAuth()
@@ -67,26 +113,14 @@ export default function Relatorios() {
         {!rel.loading && rel.relatorios.length > 0 && (
           <div className="relatorios-lista">
             {rel.relatorios.map((r) => (
-              <div key={r.id} className="relatorio-item">
-                <div className="relatorio-info">
-                  <span className="relatorio-nome">{r.nomeArquivo}</span>
-                  <span className="relatorio-data">{r.criadoEm}</span>
-                </div>
-                <div className="relatorio-actions">
-                  <button className="btn-download" onClick={() => rel.handleDownload(r)}>
-                    Baixar PDF
-                  </button>
-                  {isAdmin && (
-                    <button
-                      className="btn-delete"
-                      onClick={() => rel.handleDelete(r.id)}
-                      disabled={rel.saving}
-                    >
-                      Deletar
-                    </button>
-                  )}
-                </div>
-              </div>
+              <RelatorioPreview
+                key={r.id}
+                relatorio={r}
+                isAdmin={isAdmin}
+                saving={rel.saving}
+                onDownload={rel.handleDownload}
+                onDelete={rel.handleDelete}
+              />
             ))}
           </div>
         )}
