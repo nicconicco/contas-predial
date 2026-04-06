@@ -5,14 +5,25 @@ import YearTabs from '../../components/YearTabs'
 import MonthTabs from '../../components/MonthTabs'
 import FundoTable from '../../components/FundoTable'
 import TotaisPanel from '../../components/TotaisPanel'
+import { useState } from 'react'
 import './Fundos.css'
 
 export default function Fundos() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const fundos = useFundos()
+  const [showRateioVazio, setShowRateioVazio] = useState(false)
 
   const isAdmin = user.role === 'admin'
+
+  function handleClickRateio() {
+    const rateios = fundos.dadosMes?.rateios || []
+    if (rateios.length === 0 && !isAdmin) {
+      setShowRateioVazio(true)
+    } else {
+      fundos.handleVisualizarRateio()
+    }
+  }
 
   function handleLogout() {
     logout()
@@ -82,7 +93,7 @@ export default function Fundos() {
         <div className="fundos-totais-bar">
           <button
             className="btn-rateio"
-            onClick={fundos.handleVisualizarRateio}
+            onClick={handleClickRateio}
             disabled={fundos.loadingRateio}
           >
             {fundos.loadingRateio ? 'Carregando...' : 'Visualize como foi feito o rateio desse mês'}
@@ -102,6 +113,15 @@ export default function Fundos() {
             ano={fundos.anoSelecionado}
             onClose={fundos.fecharTotais}
           />
+        )}
+
+        {showRateioVazio && (
+          <div className="totais-overlay">
+            <div className="rateio-vazio-popup">
+              <p>Ainda não foi subido nenhum comprovante a este mês.</p>
+              <button className="btn-ok-popup" onClick={() => setShowRateioVazio(false)}>OK</button>
+            </div>
+          </div>
         )}
 
         {fundos.showRateio && (

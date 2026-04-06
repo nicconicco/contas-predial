@@ -287,6 +287,39 @@
   font-size: 0.95rem;
 }
 
+/* Popup rateio vazio */
+.rateio-vazio-popup {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+}
+
+.rateio-vazio-popup p {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.btn-ok-popup {
+  padding: 0.5rem 2.5rem;
+  background-color: #1a1a2e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-ok-popup:hover {
+  background-color: #2d2d4e;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .fundos-header {
