@@ -32,8 +32,10 @@
 .fundos-totais-bar {
   display: flex;
   justify-content: flex-end;
+  gap: 0.75rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .btn-totais {
@@ -124,6 +126,167 @@
   border-top: 2px solid #1a1a2e;
 }
 
+/* Botao rateio */
+.btn-rateio {
+  padding: 0.6rem 1.5rem;
+  background-color: #4a90d9;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-rateio:hover {
+  background-color: #357abd;
+}
+
+.btn-rateio:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Rateio modal */
+.rateio-panel {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  max-width: 900px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.rateio-admin-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.btn-upload-rateio {
+  padding: 0.5rem 1.2rem;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-upload-rateio:hover {
+  background-color: #218838;
+}
+
+.btn-delete-rateio {
+  padding: 0.5rem 1.2rem;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-delete-rateio:hover {
+  background-color: #c0392b;
+}
+
+.btn-delete-rateio:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Lista de rateios */
+.rateio-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rateio-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+.rateio-item-ativo {
+  border-color: #4a90d9;
+  background: #eef4fc;
+}
+
+.rateio-item-nome {
+  font-size: 0.9rem;
+  color: #333;
+  word-break: break-all;
+}
+
+.rateio-item-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  margin-left: 0.75rem;
+}
+
+.btn-preview-rateio {
+  padding: 0.35rem 0.8rem;
+  background-color: #4a90d9;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-preview-rateio:hover {
+  background-color: #357abd;
+}
+
+.btn-preview-rateio:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.rateio-preview-container {
+  margin-top: 0.5rem;
+}
+
+.rateio-filename {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.rateio-preview-container iframe {
+  width: 100%;
+  height: 500px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.rateio-vazio {
+  text-align: center;
+  color: #999;
+  padding: 2rem 0;
+  font-size: 0.95rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .fundos-header {
@@ -144,5 +307,18 @@
   .totais-panel {
     padding: 1rem;
     width: 95%;
+  }
+
+  .rateio-panel {
+    padding: 1rem;
+    width: 95%;
+  }
+
+  .rateio-preview-container iframe {
+    height: 350px;
+  }
+
+  .fundos-totais-bar {
+    flex-direction: column;
   }
 }

@@ -72,10 +72,21 @@ export default function Fundos() {
           isAdmin={isAdmin}
           saving={fundos.saving}
           onToggleFundo={fundos.toggleFundo}
+          onChangeValorManual={fundos.handleValorManual}
           onSave={fundos.handleSave}
+          onUploadComprovanteApt={fundos.handleComprovanteApt}
+          onDownloadComprovanteApt={fundos.handleDownloadComprovanteApt}
+          onDeleteComprovanteApt={fundos.handleDeleteComprovanteApt}
         />
 
         <div className="fundos-totais-bar">
+          <button
+            className="btn-rateio"
+            onClick={fundos.handleVisualizarRateio}
+            disabled={fundos.loadingRateio}
+          >
+            {fundos.loadingRateio ? 'Carregando...' : 'Visualize como foi feito o rateio desse mês'}
+          </button>
           <button
             className="btn-totais"
             onClick={fundos.calcularTotais}
@@ -91,6 +102,73 @@ export default function Fundos() {
             ano={fundos.anoSelecionado}
             onClose={fundos.fecharTotais}
           />
+        )}
+
+        {fundos.showRateio && (
+          <div className="totais-overlay">
+            <div className="rateio-panel">
+              <div className="totais-header">
+                <h2>Rateio — {fundos.mesSelecionado} {fundos.anoSelecionado}</h2>
+                <button className="btn-fechar-totais" onClick={fundos.fecharRateio}>Fechar</button>
+              </div>
+
+              {isAdmin && (
+                <div className="rateio-admin-actions">
+                  <label className="btn-upload-rateio">
+                    Enviar PDF
+                    <input
+                      type="file"
+                      accept=".pdf"
+                      onChange={fundos.handleUploadRateio}
+                      hidden
+                    />
+                  </label>
+                </div>
+              )}
+
+              {(fundos.dadosMes?.rateios || []).length > 0 ? (
+                <>
+                  <ul className="rateio-lista">
+                    {(fundos.dadosMes.rateios).map((item) => (
+                      <li key={item.id} className={`rateio-item ${fundos.rateioPreview?.id === item.id ? 'rateio-item-ativo' : ''}`}>
+                        <span className="rateio-item-nome">{item.nomeArquivo}</span>
+                        <div className="rateio-item-actions">
+                          <button
+                            className="btn-preview-rateio"
+                            onClick={() => fundos.handlePreviewRateio(item.id)}
+                            disabled={fundos.loadingRateio}
+                          >
+                            {fundos.loadingRateio && fundos.rateioPreview?.id === item.id ? '...' : 'Visualizar'}
+                          </button>
+                          {isAdmin && (
+                            <button
+                              className="btn-delete-rateio"
+                              onClick={() => fundos.handleDeleteRateioItem(item.id)}
+                              disabled={fundos.saving}
+                            >
+                              Deletar
+                            </button>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {fundos.rateioPreview && (
+                    <div className="rateio-preview-container">
+                      <p className="rateio-filename">{fundos.rateioPreview.nomeArquivo}</p>
+                      <iframe
+                        src={fundos.rateioPreview.base64}
+                        title="Rateio do mês"
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <p className="rateio-vazio">Nenhum rateio foi enviado para este mês.</p>
+              )}
+            </div>
+          </div>
         )}
       </main>
     </div>

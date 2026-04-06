@@ -6,7 +6,11 @@ export default function FundoTable({
   isAdmin,
   saving,
   onToggleFundo,
+  onChangeValorManual,
   onSave,
+  onUploadComprovanteApt,
+  onDownloadComprovanteApt,
+  onDeleteComprovanteApt,
 }) {
   return (
     <div className="table-container">
@@ -17,6 +21,7 @@ export default function FundoTable({
             <th>Fundo Interno (R$50)</th>
             <th>Fundo Externo (R$30)</th>
             <th>Total do Mês</th>
+            {isAdmin && <th>Comprovante PDF</th>}
             {isAdmin && <th>Ações</th>}
           </tr>
         </thead>
@@ -57,7 +62,57 @@ export default function FundoTable({
                     </span>
                   )}
                 </td>
-                <td className="cell-total">R$ {totalMes.toFixed(2)}</td>
+                <td className="cell-total">
+                  {isAdmin ? (
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      className="input-valor-total"
+                      value={row.valorManual !== '' && row.valorManual != null ? row.valorManual : ''}
+                      placeholder={totalMes.toFixed(2)}
+                      onChange={(e) => onChangeValorManual(index, e.target.value)}
+                    />
+                  ) : (
+                    <>R$ {(row.valorManual !== '' && row.valorManual != null ? Number(row.valorManual) : totalMes).toFixed(2)}</>
+                  )}
+                </td>
+                {isAdmin && (
+                  <td className="cell-comprovante">
+                    {row.comprovantePdf ? (
+                      <>
+                        <span className="comprovante-apt-nome">{row.comprovantePdf}</span>
+                        <div className="comprovante-apt-actions">
+                          <button
+                            className="btn-download-sm"
+                            onClick={() => onDownloadComprovanteApt(index)}
+                            disabled={saving}
+                          >
+                            Baixar
+                          </button>
+                          <button
+                            className="btn-delete-sm"
+                            onClick={() => onDeleteComprovanteApt(index)}
+                            disabled={saving}
+                          >
+                            Deletar
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <span className="sem-comprovante-apt">Nenhum</span>
+                    )}
+                    <label className="btn-upload-sm">
+                      {row.comprovantePdf ? 'Trocar' : 'Enviar'}
+                      <input
+                        type="file"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        onChange={(e) => onUploadComprovanteApt(index, e)}
+                        hidden
+                      />
+                    </label>
+                  </td>
+                )}
                 {isAdmin && (
                   <td>
                     <button className="btn-atualizar" onClick={onSave} disabled={saving}>
